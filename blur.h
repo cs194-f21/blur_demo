@@ -18,8 +18,8 @@ typedef data_t vec_t
 
 // Try a variety of vector block sizes
 #if !defined(I_VEC) && !defined(J_VEC)
-static constexpr long I_VEC = 27;
-static constexpr long J_VEC = 1;
+static constexpr long I_VEC = 7;
+static constexpr long J_VEC = 2;
 #endif
 
 void blur_tile(data_t *a, long lda, data_t *b, long ldb);
