@@ -9,9 +9,11 @@
 #include <vector>
 
 int main() {
-  constexpr long vdivps = I_VEC * J_VEC + (I_VEC + 2) * J_VEC;
-  constexpr long vaddps = 2 * vdivps;
-  constexpr long flops = VEC_W * (vdivps + vaddps);
+  constexpr float peak_gflops = 229.899; // Hard-coded for i9-7900X @ 4.3 GHz
+
+  constexpr long muls = I_VEC * J_VEC + (I_VEC + 2) * J_VEC;
+  constexpr long adds = 2 * muls;
+  constexpr long flops = VEC_W * (adds + muls);
 
   constexpr long width = J_VEC * VEC_W;
   constexpr long lda = width + 2;
@@ -39,10 +41,12 @@ int main() {
     nIter += 1000;
     end = std::chrono::steady_clock::now();
     duration = std::chrono::duration<double>(end - start).count();
-  } while (duration < 0.5);
+  } while (duration < 1.5);
 
-  printf("%8s I=%-2d J=%-2d Ran %8ld iterations in %.2lf seconds. Speed was "
-         "%.2lf GFLOPs\n",
+  double gflops = (double)flops / duration * (double)nIter * 1e-9;
+
+  printf("%8s I=%-2d J=%-2d Ran %9ld iterations in %.2lf seconds. Speed was "
+         "%.2lf GFLOPs (%.2lf%% of peak)\n",
          UNROLLING ? "UNROLL" : "AUTO", I_VEC, J_VEC, nIter, duration,
-         (double)flops / duration * (double)nIter * 1e-9);
+         gflops, gflops / peak_gflops * 100);
 }

@@ -7,7 +7,7 @@ endif ()
 
 foreach (UNROLLING RANGE 0 1)
   foreach (I_VEC RANGE 1 32)
-    foreach (J_VEC RANGE 1 4)
+    foreach (J_VEC RANGE 1 1)
       math(EXPR vecs "${I_VEC} * ${J_VEC}")
       if (vecs GREATER 32)
         continue()
