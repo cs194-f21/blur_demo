@@ -6,10 +6,14 @@ void blur_tile(data_t *a, long lda, data_t *b, long ldb) {
 
   // Now we have an intermediate array of _vectors_
   vec_t h_blur[I_VEC + 2][J_VEC];
-  #pragma GCC unroll 32
+#if UNROLLING
+#pragma GCC unroll 32
+#endif
   for (long i = 0; i < I_VEC + 2; i++) {
     float *a_base = &a[i * lda];
-    #pragma GCC unroll 32
+#if UNROLLING
+#pragma GCC unroll 32
+#endif
     for (long jo = 0; jo < J_VEC; jo++) {
       // Load three horizontally overlapping vectors
       vec_t a_left = *(vec_t *)(&a_base[jo * VEC_W]);
@@ -20,10 +24,14 @@ void blur_tile(data_t *a, long lda, data_t *b, long ldb) {
       h_blur[i][jo] = (a_left + a_mid + a_right) / 3.0;
     }
   }
-  #pragma GCC unroll 32
+#if UNROLLING
+#pragma GCC unroll 32
+#endif
   for (long i = 0; i < I_VEC; i++) {
     float *b_base = &b[i * ldb];
-    #pragma GCC unroll 32
+#if UNROLLING
+#pragma GCC unroll 32
+#endif
     for (long jo = 0; jo < J_VEC; jo++) {
       // Average 3x1 window of vectors, write back out to memory
       *(vec_t *)(&b_base[jo * VEC_W]) =

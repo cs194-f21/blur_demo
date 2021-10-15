@@ -41,8 +41,8 @@ int main() {
     duration = std::chrono::duration<double>(end - start).count();
   } while (duration < 0.5);
 
-  printf(
-      "I=%d J=%d Ran %ld iterations in %.2lf seconds. Speed was %.2lf GFLOPs\n",
-      I_VEC, J_VEC, nIter, duration,
-      (double)flops / duration * (double)nIter * 1e-9);
+  printf("%8s I=%-2d J=%-2d Ran %8ld iterations in %.2lf seconds. Speed was "
+         "%.2lf GFLOPs\n",
+         UNROLLING ? "UNROLL" : "AUTO", I_VEC, J_VEC, nIter, duration,
+         (double)flops / duration * (double)nIter * 1e-9);
 }
