@@ -41,12 +41,11 @@ int main() {
     nIter += 1000;
     end = std::chrono::steady_clock::now();
     duration = std::chrono::duration<double>(end - start).count();
-  } while (duration < 1.5);
+  } while (duration < 3.0);
 
   double gflops = (double)flops / duration * (double)nIter * 1e-9;
 
-  printf("%8s I=%-2d J=%-2d Ran %9ld iterations in %.2lf seconds. Speed was "
+  printf("I=%-2d J=%-2d Ran %9ld iterations in %.2lf seconds. Speed was "
          "%.2lf GFLOPs (%.2lf%% of peak)\n",
-         UNROLLING ? "UNROLL" : "AUTO", I_VEC, J_VEC, nIter, duration,
-         gflops, gflops / peak_gflops * 100);
+         I_VEC, J_VEC, nIter, duration, gflops, gflops / peak_gflops * 100);
 }
