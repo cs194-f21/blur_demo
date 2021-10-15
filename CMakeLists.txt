@@ -6,7 +6,7 @@ if (NOT CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
 endif ()
 
 foreach (I_VEC RANGE 1 32)
-  foreach (J_VEC RANGE 1 4)
+  foreach (J_VEC RANGE 1 32)
     math(EXPR vecs "${I_VEC} * ${J_VEC}")
     if (vecs GREATER 32)
       continue()
